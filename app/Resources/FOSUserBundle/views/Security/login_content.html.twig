@@ -1,0 +1,31 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+	<h1>Login Form</h1>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+<div>
+                <input type="text" id="username" name="_username" class="form-control" placeholder="Username" required="" />
+              </div>
+              <div>
+                <input type="password" id="password" name="_password" class="form-control" placeholder="Password" required="" />
+              </div>
+		<div class="text-center" >
+                <input style="float:none;" class="btn btn-default submit" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+              </div>
+
+    <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i> EGM!</h1>
+                  <p>©2016 All Rights Reserved. Ghaoui Hamdi. Privacy and Terms</p>
+                </div>
+              </div>
+</form>

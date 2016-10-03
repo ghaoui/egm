@@ -1,0 +1,8 @@
+{
+    "query": {{query}},
+    "suggestions": [
+    {% for produit in produits %}
+        { "value": "{{ produit.ref }}", "data": "{{ produit.name }}",  "unit": "{{ produit.unit }}",  "price": "{{ produit.price }}"}{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+}

@@ -1,0 +1,219 @@
+{% extends 'EgmBundle::base.html.twig' %}
+{% block body %}
+	<div class="row">
+    <div class="col-lg-12">
+      <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Ajouter facture</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <!-- start form for validation -->
+                      {{ form_start(form) }}
+                      <div class="row margin-bottom">
+                            <div class="col-lg-9">
+                              {{ form_label(form.societe)}}
+                              {{ form_widget(form.societe, {'attr': {'class' : 'form-control'}}) }}
+                            </div>
+                          <div class="col-lg-3">
+                              {{ form_label(form.datefact) }}
+                              {{ form_widget(form.datefact, {'attr': {'class' : ''}}) }}
+                          </div>
+                      </div>
+                      <div class="row margin-bottom">
+                            <div class="col-lg-10 text-right">
+                              <label class="facture_no">Facture N° :</label>
+                            </div>
+                          <div class="col-lg-1">
+                              {{ form_widget(form.numfact, {'attr': {'class' : 'form-control'}}) }}
+                          </div>
+                          <div class="col-lg-1">
+                              {{ form_widget(form.yearfact, {'attr': {'class' : 'form-control'}}) }}
+                          </div>
+                      </div>
+                      <div class="row margin-bottom">
+                        <div class="col-lg-1">
+                          {{ form_label(form.istva) }}
+                          {{ form_widget(form.istva) }}
+                          {{ form_widget(form.tva, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                        <div class="col-lg-1">
+                          {{ form_label(form.isrg) }}
+                          {{ form_widget(form.isrg) }}
+                          {{ form_widget(form.rg, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                        <div class="col-lg-1">
+                          {{ form_label(form.isras) }}
+                          {{ form_widget(form.isras) }}
+                          {{ form_widget(form.ras, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                        <div class="col-lg-1">
+                          {{ form_label(form.istva2) }}
+                          {{ form_widget(form.istva2) }}
+                          {{ form_widget(form.tva2, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                        <div class="col-lg-1">
+                          {{ form_label(form.istimbre) }}
+                          {{ form_widget(form.istimbre) }}
+                          {{ form_widget(form.timbre, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                        
+                      </div>
+                        <label for="">Ajouter produit:</label>
+
+                        <div class="add-container" id="add-container" data-ref="{{ form_widget(form.ref.vars.prototype)|e }}" data-name="{{ form_widget(form.name.vars.prototype)|e }}" data-price="{{ form_widget(form.price.vars.prototype)|e }}" data-totalprice="{{ form_widget(form.totalprice.vars.prototype)|e }}" data-qte="{{ form_widget(form.qte.vars.prototype)|e }}">
+                          {% set mykey = 0 %}
+                        {% for key,ind in form.ref %}
+                          
+                          <div class="row margin-bottom">
+                            <div class="col-lg-1">
+                              {{ form_errors(form.ref[key]) }}
+                              {{ form_widget(form.ref[key]) }}
+                            </div>
+                            <div class="col-lg-5">
+                              {{ form_errors(form.name[key]) }}
+                              {{ form_widget(form.name[key]) }}
+                            </div>
+                            <div class="col-lg-2">
+                              {{ form_errors(form.price[key]) }}
+                              {{ form_widget(form.price[key]) }}
+                            </div>
+                            <div class="col-lg-1">
+                              {{ form_errors(form.qte[key]) }}
+                              {{ form_widget(form.qte[key]) }}
+                            </div>
+                            <div class="col-lg-2">
+                              {{ form_errors(form.totalprice[key]) }}
+                              {{ form_widget(form.totalprice[key]) }}
+                            </div>
+                            <div class="col-lg-1">
+                              <a href="#" class="remove_field"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                            </div>
+                          </div>  
+                        {% if key > mykey %}
+                        {% set mykey = key %}
+                        {% endif %}
+                        {% endfor %}
+                        </div>  
+                        
+                    <a href="#" id="add-another-email">Add another email</a>
+                  <div>
+            <button type="submit" class="btn btn-primary">Sauvegarder</button></div>
+                    {{ form_end(form) }}
+                    <!-- end form for validations -->
+
+                  </div>
+                </div>
+                
+    </div>
+  </div>
+<script type="text/javascript"> var fieldCount = '{{ mykey + 1 }}'; </script>
+{% endblock %}
+{% block javascripts%}
+  {{parent()}}
+  <script type="text/javascript">
+    // keep track of how many email fields have been rendered
+    
+
+    $(document).ready(function() {
+        $('#add-another-email').click(function(e) {
+            e.preventDefault();
+
+            var container = $('#add-container');
+
+            // grab the prototype template
+            var newWidget = container.attr('data-ref');
+            var newNameWidget = container.attr('data-name');
+            var newPriceWidget = container.attr('data-price');
+            var newTotalpriceWidget = container.attr('data-totalprice');
+            var newQteWidget = container.attr('data-qte');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, fieldCount);
+            newNameWidget = newNameWidget.replace(/__name__/g, fieldCount);
+            newPriceWidget = newPriceWidget.replace(/__name__/g, fieldCount);
+            newTotalpriceWidget = newTotalpriceWidget.replace(/__name__/g, fieldCount);
+            newQteWidget = newQteWidget.replace(/__name__/g, fieldCount);
+            fieldCount++;
+
+            // create a new list element and add it to the list
+
+            var newLi = $('<div class="col-lg-1"></div>').html(newWidget);
+            var newNameLi = $('<div class="col-lg-5"></div>').html(newNameWidget);
+            var newPriceLi = $('<div class="col-lg-2"></div>').html(newPriceWidget);
+            var newTotalpriceLi = $('<div class="col-lg-2"></div>').html(newTotalpriceWidget);
+            var newQteLi = $('<div class="col-lg-1"></div>').html(newQteWidget);
+            var remove = $('<div class="col-lg-1"></div>').html('<a href="#" class="remove_field"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+            var rows = $('<div class="row margin-bottom"></div>');            
+            newLi.appendTo(rows);
+            newNameLi.appendTo(rows);
+            newPriceLi.appendTo(rows);
+            newQteLi.appendTo(rows);
+            newTotalpriceLi.appendTo(rows);
+            remove.appendTo(rows);
+            rows.appendTo(container);
+            bindAction();
+        });
+
+bindAction();
+        
+    })
+    function bindAction(){
+      $('.remove_field').bind( "click", function(e){
+        e.preventDefault();
+        $(this).parent().parent().remove();
+      });
+
+      $('.qte_field').keyup(function(){
+          price = $(this).parent().parent().find('.price_field').val();
+          qte = $(this).parent().parent().find('.qte_field').val();
+          $(this).parent().parent().find('.total_price').val(price * qte);
+      });
+
+      // autocomplete
+    $('.reference_field').autocomplete({
+         serviceUrl: '/ajax/reference/',
+        onSelect: function (suggestion) {
+            $(this).parent().parent().find('.name_field').val(suggestion.data);
+            $(this).parent().parent().find('.price_field').val(suggestion.price);
+            $(this).parent().parent().find('.qte_field').focus().val(0);
+        }
+    });
+
+    $(".qte_field, .price_field").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+    $('.total_price').prop('readonly', true);
+    }
+</script>
+{% endblock %}

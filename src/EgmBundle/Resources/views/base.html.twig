@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}EGM{% endblock %}</title>
+        {% block stylesheets %}
+              <link href="{{ asset('bundles/egm/css/bootstrap.min.css') }}" rel="stylesheet" />
+              <link href="{{ asset('bundles/egm/css/font-awesome.min.css') }}" rel="stylesheet" />
+              <link href="{{ asset('bundles/egm/css/skins/flat/green.css') }}" rel="stylesheet" />
+              <link href="{{ asset('bundles/egm/css/pnotify.css') }}" rel="stylesheet" />
+              <link href="{{ asset('bundles/egm/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" />
+              <link href="{{ asset('bundles/egm/css/responsive.bootstrap.min.css') }}" rel="stylesheet" />
+              <link href="{{ asset('bundles/egm/css/custom.css') }}" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                {% include 'EgmBundle::menu.html.twig' %}
+                {% include 'EgmBundle::top.html.twig' %}
+                <div class="right_col" role="main">
+                {% block body %}
+                {% include 'EgmBundle::content.html.twig' %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+        {% block javascripts %}
+            <script src="{{ asset('bundles/egm/js/jquery.min.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/icheck.min.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/pnotify.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/jquery.dataTables.min.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/dataTables.responsive.min.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/jquery.autocomplete.min.js') }}"></script>
+            <script src="{{ asset('bundles/egm/js/custom.js') }}"></script>
+            <script type="text/javascript">
+            $(document).ready(function(){
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        new PNotify({
+                              //title: 'Regular Success',
+                              text: '{{flash}}',
+                              type: '{{label}}',
+                              styling: 'bootstrap3',
+                              delay: 2000
+                          });
+                    {% endfor %}
+                {% endfor %}                        
+            });
+            </script>
+        {% endblock %}
+
+    </body>
+</html>

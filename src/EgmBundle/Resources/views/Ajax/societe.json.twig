@@ -1,0 +1,8 @@
+{
+    "query": "{{query}}",
+    "suggestions": [
+    {% for societe in societes %}
+        { "value": "{{ societe.name }}", "data": "{{ societe.name }}"}{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+}
