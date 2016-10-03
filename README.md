@@ -1,2 +1,2 @@
 # egm
-angular2 application to EGM
+angular2 / symfony 3 application to EGM
